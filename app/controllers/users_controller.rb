@@ -18,6 +18,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(name: params[:name])
+    if @user
+      render :show
+    else
+      flash[:danger] = "#{params[:name]}は存在しません"
+      redirect_to root_path
+    end
   end
 
   def user_params

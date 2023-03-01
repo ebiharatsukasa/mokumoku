@@ -1,12 +1,22 @@
 class RelationshipsController < ApplicationController
   # フォローする
   def create
-    current_user.follow(params[:user_name])
+    user = User.find_by(name: params[:user_name])
+    if user
+      current_user.follow(user)
+    else
+      flash[:danger] = 'フォローできませんでした'
+    end
     redirect_to request.referer
   end
   # フォローを外す
   def destroy
-    current_user.unfollow(params[:user_name])
+    begin
+      user = User.find_by(name: params[:user_name])
+      current_user.unfollow(user)
+    rescue
+      flash[:danger] = 'フォローを解除できませんでした'
+    end
     redirect_to request.referer
   end
 end

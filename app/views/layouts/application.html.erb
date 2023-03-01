@@ -16,6 +16,9 @@
 
   <body>
     <%= render 'shared/header' %>
+    <% flash.each do |message_type, message| %>
+      <%= message %>
+    <% end %>
     <div class="py-3">
       <%= yield %>
     </div>
